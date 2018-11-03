@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace Alexa.NET.Reminders
 {
@@ -6,16 +9,16 @@ namespace Alexa.NET.Reminders
     {
         public Recurrence() { }
 
-        public Recurrence(string frequency, string[] days)
+        public Recurrence(string frequency, IEnumerable<string> days)
         {
             Frequency = frequency;
-            Days = days;
+            Days = days.ToList();
         }
 
         [JsonProperty("freq", NullValueHandling = NullValueHandling.Ignore)]
         public string Frequency { get; set; }
 
         [JsonProperty("byDay",NullValueHandling = NullValueHandling.Ignore)]
-        public string[] Days { get; set; }
+        public IList<string> Days { get; set; }
     }
 }

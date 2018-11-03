@@ -12,8 +12,17 @@ namespace Alexa.NET.Reminders.Test
         [Fact]
         public void ReminderSerializesProperly()
         {
-            var reminder = new Reminder();
-            Assert.False(true);
+            var reminder = new Reminder
+            {
+                RequestTime = DateTime.Parse("2016-09-22T19:04:00.672"),
+                Trigger = new AbsoluteTrigger(
+                    DateTime.Parse("2018-09-22T19:00:00.000"),
+                    "America/Los_Angeles",
+                    new Recurrence("WEEKLY", new[] { "MO" })),
+                AlertInformation = new AlertInformation(new []{new SpokenContent("walk the dog", "en-US")}),
+                PushNotification = PushNotification.Enabled
+            };
+            Assert.True(Utility.CompareJson(reminder, "reminder.json"));
         }
 
         [Fact]

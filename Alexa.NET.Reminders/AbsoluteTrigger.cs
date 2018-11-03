@@ -10,6 +10,23 @@ namespace Alexa.NET.Reminders
         public const string TriggerType = "SCHEDULED_ABSOLUTE";
         public override string Type => TriggerType;
 
+        public AbsoluteTrigger() { }
+
+        public AbsoluteTrigger(DateTime scheduledTime)
+        {
+            ScheduledTime = scheduledTime;
+        }
+
+        public AbsoluteTrigger(DateTime scheduledTime, string timeZoneId, Recurrence recurrence) : this(scheduledTime,recurrence)
+        {
+            TimeZoneId = timeZoneId;
+        }
+
+        public AbsoluteTrigger(DateTime scheduledTime, Recurrence recurrence):this(scheduledTime)
+        {
+            this.Recurrence = recurrence;
+        }
+
         [JsonProperty("scheduledTime")]
         public DateTime ScheduledTime { get; set; }
 
