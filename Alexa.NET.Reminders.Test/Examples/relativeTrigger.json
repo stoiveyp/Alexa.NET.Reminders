@@ -1,0 +1,4 @@
+﻿{
+  "type": "SCHEDULED_RELATIVE", // Indicates type of trigger
+  "offsetInSeconds": 7200 // If reminder is set using relative time, use this field to specify the time after which reminder will ring (in seconds)
+}

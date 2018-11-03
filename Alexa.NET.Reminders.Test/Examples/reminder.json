@@ -1,0 +1,25 @@
+{
+  "requestTime": "2016-09-22T19:04:00.672", // valid ISO 8601 format - describes the time when event actually occurred
+  "trigger": {
+    "type": "SCHEDULED_ABSOLUTE", // Indicates type of trigger
+    "scheduledTime": "2018-09-22T19:00:00.000", // valid ISO 8601 format - Intended trigger time
+    "timeZoneId": "America/Los_Angeles", // A string containing the ID of the time zone. See the "How time zones work" section below.
+    "recurrence": { // should contain all the recurrence information
+      "freq": "WEEKLY", // frequency type of the recurrence
+      "byDay": [ "MO" ] // specifies a list of days within a week
+    }
+  },
+  "alertInfo": {
+    "spokenInfo": {
+      "content": [
+        {
+          "locale": "en-US", // locale in which value is specified
+          "text": "walk the dog" // text that will be used for display and spoken purposes
+        }
+      ]
+    }
+  },
+  "pushNotification": {
+    "status": "ENABLED" // if a push notification should be sent or not [default = ENABLED]
+  }
+}
