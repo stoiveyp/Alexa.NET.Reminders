@@ -19,8 +19,15 @@ namespace Alexa.NET.Reminders.Test
         [Fact]
         public void AbsoluteTriggerSerializeProperly()
         {
-            var trigger = new AbsoluteTrigger();
+            var trigger = new AbsoluteTrigger
+            {
+                ScheduledTime = DateTime.Parse("2018-09-22T19:00:00.000"),
+                TimeZoneId = "America/Los_Angeles",
+                Recurrence = new Recurrence("WEEKLY", new[] {"MO"})
+            };
             Assert.True(Utility.CompareJson(trigger,"absoluteTrigger.json"));
+            var triggerTest = Utility.ExampleFileContent<Trigger>("absoluteTrigger.json");
+            Assert.IsType<AbsoluteTrigger>(triggerTest);
         }
 
         [Fact]
@@ -28,12 +35,8 @@ namespace Alexa.NET.Reminders.Test
         {
             var trigger = new RelativeTrigger(7200);
             Assert.True(Utility.CompareJson(trigger, "relativeTrigger.json"));
-        }
-
-        [Fact]
-        public void SerializerDeserializesProperly()
-        {
-            Assert.False(true);
+            var triggerTest = Utility.ExampleFileContent<Trigger>("relativeTrigger.json");
+            Assert.IsType<RelativeTrigger>(triggerTest);
         }
     }
 }
