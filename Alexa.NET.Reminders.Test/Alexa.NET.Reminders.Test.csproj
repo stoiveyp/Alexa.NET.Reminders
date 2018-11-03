@@ -16,4 +16,16 @@
     <ProjectReference Include="..\Alexa.NET.Reminders\Alexa.NET.Reminders.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Examples\absoluteTrigger.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\relativeTrigger.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\reminder.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

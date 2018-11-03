@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Alexa.NET.Request;
 
-namespace Alexa.NET.Reminders
+namespace Alexa.NET.Response
 {
     public class RemindersClient
     {

@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using Alexa.NET.Request;
+using Alexa.NET.Response;
 using Xunit;
 
 namespace Alexa.NET.Reminders.Test
