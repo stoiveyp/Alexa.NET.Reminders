@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -47,7 +48,7 @@ namespace Alexa.NET.Reminders
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType.IsSubclassOf(typeof(TriggerInformation));
+            return objectType.GetTypeInfo().IsSubclassOf(typeof(TriggerInformation));
         }
     }
 }
