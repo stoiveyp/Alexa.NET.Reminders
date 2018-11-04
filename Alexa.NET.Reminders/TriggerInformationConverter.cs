@@ -4,13 +4,13 @@ using Newtonsoft.Json.Linq;
 
 namespace Alexa.NET.Reminders
 {
-    public class TriggerConverter:JsonConverter
+    public class TriggerInformationConverter : JsonConverter
     {
         public override bool CanWrite => false;
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            
+
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -19,7 +19,7 @@ namespace Alexa.NET.Reminders
             var jObject = JObject.Load(reader);
             var triggerType = jObject.Value<string>("type");
 
-            object target = GetTrigger(triggerType);
+            object target = GetTriggerInformation(triggerType);
 
             if (target != null)
             {
@@ -27,19 +27,19 @@ namespace Alexa.NET.Reminders
                 return target;
             }
 
-            throw new ArgumentOutOfRangeException($"Trigger type {triggerType} not supported");
+            throw new ArgumentOutOfRangeException($"Trigger information type {triggerType} not supported");
         }
 
-        private Trigger GetTrigger(string triggerType)
+        private TriggerInformation GetTriggerInformation(string triggerType)
         {
             if (triggerType == AbsoluteTrigger.TriggerType)
             {
-                return new AbsoluteTrigger();
+                return new AbsoluteTriggerInformation();
             }
 
             if (triggerType == RelativeTrigger.TriggerType)
             {
-                return new RelativeTrigger();
+                return new RelativeTriggerInformation();
             }
 
             return null;
@@ -47,7 +47,7 @@ namespace Alexa.NET.Reminders
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType.IsSubclassOf(typeof(Trigger));
+            return objectType.IsSubclassOf(typeof(TriggerInformation));
         }
     }
 }

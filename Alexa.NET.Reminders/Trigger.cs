@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Alexa.NET.Reminders
 {
@@ -7,5 +8,8 @@ namespace Alexa.NET.Reminders
     {
         [JsonProperty("type")]
         public abstract string Type { get; }
+
+        [JsonProperty("timeZoneId", NullValueHandling = NullValueHandling.Ignore)]
+        public string TimeZoneId { get; set; }
     }
 }
