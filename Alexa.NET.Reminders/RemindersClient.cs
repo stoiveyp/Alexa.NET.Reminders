@@ -93,6 +93,18 @@ namespace Alexa.NET.Response
 
             return JsonConvert.DeserializeObject<ReminderInformation>(await message.Content.ReadAsStringAsync());
         }
+
+        public async Task Delete(string alertToken)
+        {
+            var message = await Client.DeleteAsync(
+                new Uri("/v1/alerts/reminders/" + System.Net.WebUtility.UrlEncode(alertToken), UriKind.Relative));
+
+            if (message.StatusCode != HttpStatusCode.OK)
+            {
+                var body = await message.Content.ReadAsStringAsync();
+                throw new InvalidOperationException($"Unexpected result: Status {message.StatusCode}, body:{body}");
+            }
+        }
     }
 
     public class GetReminderResponse

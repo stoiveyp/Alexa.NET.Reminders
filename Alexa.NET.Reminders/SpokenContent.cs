@@ -16,7 +16,7 @@ namespace Alexa.NET.Reminders
         [JsonProperty("text")]
         public string Text { get; set; }
 
-        [JsonProperty("ssml")]
+        [JsonProperty("ssml",NullValueHandling = NullValueHandling.Ignore)]
         public string Ssml { get; set; }
 
         [JsonProperty("locale")]

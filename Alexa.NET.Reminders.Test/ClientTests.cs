@@ -131,7 +131,17 @@ namespace Alexa.NET.Reminders.Test
         [Fact]
         public async Task DeleteReminderGeneratesExpectedCall()
         {
-            Assert.True(false);
+            var id = "abcdef";
+            var netClient = new HttpClient(new ActionMessageHandler(async req =>
+            {
+                Assert.Equal(HttpMethod.Delete, req.Method);
+                Assert.Equal("/v1/alerts/reminders/" + id, req.RequestUri.PathAndQuery);
+
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }));
+
+            var client = new RemindersClient(netClient);
+            await client.Delete(id);
         }
 
         //[Fact]
