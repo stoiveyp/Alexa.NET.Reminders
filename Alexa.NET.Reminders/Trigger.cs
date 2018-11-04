@@ -9,9 +9,6 @@ namespace Alexa.NET.Reminders
         [JsonProperty("type")]
         public abstract string Type { get; }
 
-        [JsonProperty("scheduledTime",NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime ScheduledTime { get; set; }
-
         [JsonProperty("timeZoneId", NullValueHandling = NullValueHandling.Ignore)]
         public string TimeZoneId { get; set; }
     }

@@ -15,6 +15,9 @@ namespace Alexa.NET.Reminders
         [JsonProperty("createdTime")]
         public string CreatedTime { get; set; }
 
+        [JsonProperty("trigger")]
+        public TriggerInformation Trigger { get; set; }
+
         [JsonProperty("updatedTime")]
         public string UpdatedTime { get; set; }
         [JsonProperty("status"), JsonConverter(typeof(StringEnumConverter))]

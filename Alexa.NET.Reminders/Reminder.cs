@@ -9,6 +9,8 @@ namespace Alexa.NET.Reminders
     {
         [JsonProperty("requestTime")]
         public DateTime RequestTime { get; set; }
-        
+
+        [JsonProperty("trigger")]
+        public Trigger Trigger { get; set; }
     }
 }

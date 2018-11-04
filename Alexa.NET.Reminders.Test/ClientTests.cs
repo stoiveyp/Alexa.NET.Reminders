@@ -98,6 +98,7 @@ namespace Alexa.NET.Reminders.Test
 
             Assert.NotNull(response);
             Assert.IsType<ReminderInformation>(response);
+            Assert.IsType<RelativeTriggerInformation>(response.Trigger);
             Assert.Equal("79559745-635b-44cb-ba9d-9f364d41600d", response.AlertToken);
         }
 

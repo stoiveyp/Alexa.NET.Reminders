@@ -17,6 +17,9 @@ namespace Alexa.NET.Reminders
             ScheduledTime = scheduledTime;
         }
 
+        [JsonProperty("scheduledTime", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime ScheduledTime { get; set; }
+
         public AbsoluteTrigger(DateTime scheduledTime, string timeZoneId, Recurrence recurrence) : this(scheduledTime,recurrence)
         {
             TimeZoneId = timeZoneId;
