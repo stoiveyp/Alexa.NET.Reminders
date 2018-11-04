@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Alexa.NET.Response
 {
-    public class CreateReminderResponse
+    public class ReminderChangedResponse
     {
         [JsonProperty("alertToken")]
         public string AlertToken { get; set; }

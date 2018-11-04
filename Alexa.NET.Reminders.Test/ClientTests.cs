@@ -46,6 +46,7 @@ namespace Alexa.NET.Reminders.Test
             var reminder = Utility.ExampleFileContent<Reminder>("reminder.json");
             var netClient = new HttpClient(new ActionMessageHandler(async req =>
             {
+                Assert.Equal(HttpMethod.Post, req.Method);
                 Assert.Equal("/v1/alerts/reminders", req.RequestUri.PathAndQuery);
                 var content = JsonConvert.DeserializeObject<Reminder>(await req.Content.ReadAsStringAsync());
                 Assert.IsType<AbsoluteTrigger>(content.Trigger);
@@ -55,8 +56,64 @@ namespace Alexa.NET.Reminders.Test
             var client = new RemindersClient(netClient);
             var response = await client.Create(reminder);
             Assert.NotNull(response);
-            Assert.IsType<CreateReminderResponse>(response);
-            Assert.Equal("abcdef",response.AlertToken);
+            Assert.IsType<ReminderChangedResponse>(response);
+            Assert.Equal("abcdef", response.AlertToken);
         }
+
+        [Fact]
+        public async Task UpdateReminderGeneratesExpectedCall()
+        {
+            var responseBody = Utility.ExampleFileContent("createresponse.json");
+            var reminder = Utility.ExampleFileContent<Reminder>("reminder.json");
+            var netClient = new HttpClient(new ActionMessageHandler(async req =>
+            {
+                Assert.Equal(HttpMethod.Put,req.Method);
+                Assert.Equal("/v1/alerts/reminders/abcdef", req.RequestUri.PathAndQuery);
+                var content = JsonConvert.DeserializeObject<Reminder>(await req.Content.ReadAsStringAsync());
+                Assert.IsType<AbsoluteTrigger>(content.Trigger);
+
+                return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(responseBody) };
+            }));
+            var client = new RemindersClient(netClient);
+            var response = await client.Update("abcdef",reminder);
+            Assert.NotNull(response);
+            Assert.IsType<ReminderChangedResponse>(response);
+            Assert.Equal("abcdef", response.AlertToken);
+        }
+
+        [Fact]
+        public async Task GetReminderGeneratesExpectedCall()
+        {
+            Assert.True(false);
+        }
+
+        [Fact]
+        public async Task GetAllRemindersGeneratesExpectedCall()
+        {
+            Assert.True(false);
+        }
+
+
+        [Fact]
+        public async Task DeleteReminderGeneratesExpectedCall()
+        {
+            Assert.True(false);
+        }
+
+        //[Fact]
+        //public async Task FakeTest()
+        //{
+        //    var reminder = new Reminder
+        //    {
+        //        RequestTime = DateTime.UtcNow,
+        //        Trigger = new RelativeTrigger(12 * 60 * 60),
+        //        AlertInformation = new AlertInformation(new[] { new SpokenContent("it's a test", "en-GB") }),
+        //        PushNotification = PushNotification.Disabled
+        //    };
+        //    var total = JsonConvert.SerializeObject(reminder);
+
+        //    var client = new RemindersClient("https://api.eu.amazonalexa.com","");
+        //    var response = await client.Create(reminder);
+        //}
     }
 }

@@ -35,7 +35,7 @@ namespace Alexa.NET.Response
             Client = client;
         }
 
-        public async Task<CreateReminderResponse> Create(Reminder reminder)
+        public async Task<ReminderChangedResponse> Create(Reminder reminder)
         {
             var message = await Client.PostAsync(
                 new Uri("/v1/alerts/reminders", UriKind.Relative),
@@ -46,7 +46,21 @@ namespace Alexa.NET.Response
                 throw new InvalidOperationException($"Unexpected result: Status {message.StatusCode}");
             }
 
-            return JsonConvert.DeserializeObject<CreateReminderResponse>(await message.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ReminderChangedResponse>(await message.Content.ReadAsStringAsync());
+        }
+
+        public async Task<ReminderChangedResponse> Update(string reminderId, Reminder reminder)
+        {
+            var message = await Client.PutAsync(
+                new Uri("/v1/alerts/reminders/"+System.Net.WebUtility.UrlEncode(reminderId), UriKind.Relative),
+                new StringContent(JsonConvert.SerializeObject(reminder)));
+
+            if (message.StatusCode != HttpStatusCode.OK)
+            {
+                throw new InvalidOperationException($"Unexpected result: Status {message.StatusCode}");
+            }
+
+            return JsonConvert.DeserializeObject<ReminderChangedResponse>(await message.Content.ReadAsStringAsync());
         }
     }
 }
