@@ -9,6 +9,8 @@
     <PackageTags>dotnetcore, alexa, alexa.net</PackageTags>
     <PackageReleaseNotes>initial functionality</PackageReleaseNotes>
     <Description>Small helper library for Alexa.NET based skills to access the reminders API</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
