@@ -1,0 +1,34 @@
+{
+  "totalCount": "1",
+  "alerts": [
+    {
+      "alertToken": "79559745-635b-44cb-ba9d-9f364d41600d",
+      "createdTime": "2018-11-04T08:05:44.568Z",
+      "updatedTime": "2018-11-04T08:05:44.943Z",
+      "trigger": {
+        "type": "SCHEDULED_RELATIVE",
+        "scheduledTime": "2018-11-04T20:05:44.327",
+        "timeZoneId": "Europe/London",
+        "offsetInSeconds": 43200,
+        "recurrence": null
+      },
+      "status": "ON",
+      "alertInfo": {
+        "spokenInfo": {
+          "content": [
+            {
+              "locale": "",
+              "text": "It's a test",
+              "ssml": ""
+            }
+          ]
+        }
+      },
+      "pushNotification": {
+        "status": "ENABLED"
+      },
+      "version": "2"
+    }
+  ],
+  "links": null
+}

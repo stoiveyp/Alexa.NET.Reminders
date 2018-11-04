@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Alexa.NET.Reminders;
 using Alexa.NET.Request;
@@ -39,7 +40,22 @@ namespace Alexa.NET.Response
         {
             var message = await Client.PostAsync(
                 new Uri("/v1/alerts/reminders", UriKind.Relative),
-                new StringContent(JsonConvert.SerializeObject(reminder)));
+                new StringContent(JsonConvert.SerializeObject(reminder),Encoding.UTF8,"application/json"));
+
+            if (message.StatusCode != HttpStatusCode.Created)
+            {
+                var body = await message.Content.ReadAsStringAsync();
+                throw new InvalidOperationException($"Unexpected result: Status {message.StatusCode}, body: {body}");
+            }
+
+            return JsonConvert.DeserializeObject<ReminderChangedResponse>(await message.Content.ReadAsStringAsync());
+        }
+
+        public async Task<ReminderChangedResponse> Update(string alertToken, Reminder reminder)
+        {
+            var message = await Client.PutAsync(
+                new Uri("/v1/alerts/reminders/"+System.Net.WebUtility.UrlEncode(alertToken), UriKind.Relative),
+                new StringContent(JsonConvert.SerializeObject(reminder),Encoding.UTF8,"application/json"));
 
             if (message.StatusCode != HttpStatusCode.OK)
             {
@@ -49,18 +65,17 @@ namespace Alexa.NET.Response
             return JsonConvert.DeserializeObject<ReminderChangedResponse>(await message.Content.ReadAsStringAsync());
         }
 
-        public async Task<ReminderChangedResponse> Update(string reminderId, Reminder reminder)
+        public async Task<ReminderInformation> Get(string alertToken)
         {
-            var message = await Client.PutAsync(
-                new Uri("/v1/alerts/reminders/"+System.Net.WebUtility.UrlEncode(reminderId), UriKind.Relative),
-                new StringContent(JsonConvert.SerializeObject(reminder)));
+            var message = await Client.GetAsync(
+                new Uri("/v1/alerts/reminders/" + System.Net.WebUtility.UrlEncode(alertToken), UriKind.Relative));
 
             if (message.StatusCode != HttpStatusCode.OK)
             {
                 throw new InvalidOperationException($"Unexpected result: Status {message.StatusCode}");
             }
 
-            return JsonConvert.DeserializeObject<ReminderChangedResponse>(await message.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ReminderInformation>(await message.Content.ReadAsStringAsync());
         }
     }
 }
