@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -59,10 +60,24 @@ namespace Alexa.NET.Response
 
             if (message.StatusCode != HttpStatusCode.OK)
             {
-                throw new InvalidOperationException($"Unexpected result: Status {message.StatusCode}");
+                var body = await message.Content.ReadAsStringAsync();
+                throw new InvalidOperationException($"Unexpected result: Status {message.StatusCode}, body:{body}");
             }
 
             return JsonConvert.DeserializeObject<ReminderChangedResponse>(await message.Content.ReadAsStringAsync());
+        }
+
+        public async Task<GetReminderResponse> Get()
+        {
+            var message = await Client.GetAsync(new Uri("/v1/alerts/reminders", UriKind.Relative));
+
+            if (message.StatusCode != HttpStatusCode.OK)
+            {
+                var body = await message.Content.ReadAsStringAsync();
+                throw new InvalidOperationException($"Unexpected result: Status {message.StatusCode}, body:{body}");
+            }
+
+            return JsonConvert.DeserializeObject<GetReminderResponse>(await message.Content.ReadAsStringAsync());
         }
 
         public async Task<ReminderInformation> Get(string alertToken)
@@ -72,10 +87,23 @@ namespace Alexa.NET.Response
 
             if (message.StatusCode != HttpStatusCode.OK)
             {
-                throw new InvalidOperationException($"Unexpected result: Status {message.StatusCode}");
+                var body = await message.Content.ReadAsStringAsync();
+                throw new InvalidOperationException($"Unexpected result: Status {message.StatusCode}, body:{body}");
             }
 
             return JsonConvert.DeserializeObject<ReminderInformation>(await message.Content.ReadAsStringAsync());
         }
+    }
+
+    public class GetReminderResponse
+    {
+        [JsonProperty("totalCount")]
+        public int TotalCount { get; set; }
+
+        [JsonProperty("alerts")]
+        public ReminderInformation[] Alerts { get; set; }
+
+        [JsonProperty("links")]
+        public Dictionary<string,string> Links { get; set; }
     }
 }

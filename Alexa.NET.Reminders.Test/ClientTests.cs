@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -105,7 +106,25 @@ namespace Alexa.NET.Reminders.Test
         [Fact]
         public async Task GetAllRemindersGeneratesExpectedCall()
         {
-            Assert.True(false);
+            var reminder = Utility.ExampleFileContent("reminderList.json");
+            var netClient = new HttpClient(new ActionMessageHandler(async req =>
+            {
+                Assert.Equal(HttpMethod.Get, req.Method);
+                Assert.Equal("/v1/alerts/reminders", req.RequestUri.PathAndQuery);
+
+                return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(reminder) };
+            }));
+
+            var client = new RemindersClient(netClient);
+            var response = await client.Get();
+
+            Assert.NotNull(response);
+            Assert.Equal(1,response.TotalCount);
+            Assert.Single(response.Alerts);
+            var item = response.Alerts.First();
+            Assert.IsType<ReminderInformation>(item);
+            Assert.IsType<RelativeTriggerInformation>(item.Trigger);
+            Assert.Equal("79559745-635b-44cb-ba9d-9f364d41600d", item.AlertToken);
         }
 
 
