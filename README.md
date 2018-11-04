@@ -23,6 +23,7 @@ Console.WriteLine(alertDetail.AlertToken);
 
 ## Retrieving Current Reminders
 ```csharp
+// Single reminders can be retrieved with client.Get(alertToken)
 var alertList = await client.Get();
 foreach(var alertInformation in alertList.Alerts)
 {
