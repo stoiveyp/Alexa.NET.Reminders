@@ -13,7 +13,7 @@ namespace Alexa.NET.Reminders
             Locale = locale ?? throw new ArgumentNullException(nameof(locale));
         }
 
-        [JsonProperty("text")]
+        [JsonProperty("text", NullValueHandling = NullValueHandling.Ignore)]
         public string Text { get; set; }
 
         [JsonProperty("ssml",NullValueHandling = NullValueHandling.Ignore)]
