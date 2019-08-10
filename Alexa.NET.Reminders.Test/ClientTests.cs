@@ -86,7 +86,7 @@ namespace Alexa.NET.Reminders.Test
         public async Task GetReminderGeneratesExpectedCall()
         {
             var reminder = Utility.ExampleFileContent("reminderInformation.json");
-            var netClient = new HttpClient(new ActionMessageHandler(async req =>
+            var netClient = new HttpClient(new ActionMessageHandler(req =>
             {
                 Assert.Equal(HttpMethod.Get, req.Method);
                 Assert.Equal("/v1/alerts/reminders/abcdef", req.RequestUri.PathAndQuery);
@@ -107,7 +107,7 @@ namespace Alexa.NET.Reminders.Test
         public async Task GetAllRemindersGeneratesExpectedCall()
         {
             var reminder = Utility.ExampleFileContent("reminderList.json");
-            var netClient = new HttpClient(new ActionMessageHandler(async req =>
+            var netClient = new HttpClient(new ActionMessageHandler(req =>
             {
                 Assert.Equal(HttpMethod.Get, req.Method);
                 Assert.Equal("/v1/alerts/reminders", req.RequestUri.PathAndQuery);
@@ -132,7 +132,7 @@ namespace Alexa.NET.Reminders.Test
         public async Task DeleteReminderGeneratesExpectedCall()
         {
             var id = "abcdef";
-            var netClient = new HttpClient(new ActionMessageHandler(async req =>
+            var netClient = new HttpClient(new ActionMessageHandler(req =>
             {
                 Assert.Equal(HttpMethod.Delete, req.Method);
                 Assert.Equal("/v1/alerts/reminders/" + id, req.RequestUri.PathAndQuery);

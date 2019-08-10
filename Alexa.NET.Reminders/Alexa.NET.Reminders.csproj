@@ -1,20 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Steven Pears</Authors>
-    <PackageLicenseUrl>https://github.com/stoiveyp/Alexa.NET.Reminders/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/stoiveyp/Alexa.NET.Reminders</PackageProjectUrl>
     <RepositoryUrl>https://github.com/stoiveyp/Alexa.NET.Reminders</RepositoryUrl>
     <PackageTags>dotnetcore, alexa, alexa.net</PackageTags>
-    <PackageReleaseNotes>update SpokenContent to allow for SSML without text</PackageReleaseNotes>
+    <PackageReleaseNotes>update to netstandard2.0</PackageReleaseNotes>
     <Description>Small helper library for Alexa.NET based skills to access the reminders API</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Alexa.NET" Version="1.5.5" />
+    <PackageReference Include="Alexa.NET" Version="1.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Alexa.NET.ProactiveEvents\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
